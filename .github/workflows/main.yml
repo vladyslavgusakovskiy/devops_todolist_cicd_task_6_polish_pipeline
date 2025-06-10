@@ -7,6 +7,20 @@ on:
     branches: ["main"]
   pull_request:
     branches: ["main"]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Python versions"
+        required: true
+        type: choice
+        options: [windows-3.8, ubuntu-3.9]
+      message:
+        description: "Test message"
+        required: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   PythonVersion: 3.8
