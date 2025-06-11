@@ -64,11 +64,11 @@ jobs:
           --set todoapp.secrets.DB_HOST="${{ secrets.APP_DB_HOST }}" \
           --set todoapp.image.tag=${{ github.sha }}
 
-      - name: Debug Kubernetes Resources Before Helm
+      - name: Create Kubernetes Namespaces
         run: |
-          kubectl get pods -A
-          kubectl describe pods -A
-          kubectl get svc -A
+          kubectl create namespace todoapp || echo "namespace todoapp already exists"
+          kubectl create namespace mysql-staging || echo "namespace mysql-staging already exists"
+
 
       - name: Deploy helm to Development
         run: |
