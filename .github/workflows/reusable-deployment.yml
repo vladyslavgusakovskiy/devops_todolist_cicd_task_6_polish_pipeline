@@ -64,6 +64,12 @@ jobs:
           --set todoapp.secrets.DB_HOST="${{ secrets.APP_DB_HOST }}" \
           --set todoapp.image.tag=${{ github.sha }}
 
+      - name: Debug Kubernetes Resources Before Helm
+        run: |
+          kubectl get pods -A
+          kubectl describe pods -A
+          kubectl get svc -A
+
       - name: Deploy helm to Development
         run: |
           helm upgrade --install --wait --timeout 180s --debug ${{ inputs.helm-release-name }} ./todoapp-*.tgz \
@@ -77,4 +83,3 @@ jobs:
           --set todoapp.secrets.DB_PASSWORD="${{ secrets.MYSQL_PASSWORD }}" \
           --set todoapp.secrets.DB_HOST="${{ secrets.APP_DB_HOST }}" \
           --set todoapp.image.tag=${{ github.sha }}
-
