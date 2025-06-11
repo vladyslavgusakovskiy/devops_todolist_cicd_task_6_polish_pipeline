@@ -124,7 +124,7 @@ jobs:
 
     - uses: actions/download-artifact@v4
       with:
-        name: helm-artifacts-ubuntu-latest-3.8
+        name: helm-artifacts
         path: .
 
     - name: Set Up Helm
