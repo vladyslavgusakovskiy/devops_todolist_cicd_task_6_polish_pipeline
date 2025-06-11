@@ -68,41 +68,21 @@ jobs:
         run: |
           flake8 . --exit-zero --max-complexity=6
 
-      - name: Upload python artifacts for all matrix jobs
-        uses: actions/upload-artifact@v4
-        with:
-          name: python-artifacts-${{ matrix.OsType }}-${{ matrix.PythonVersion }}
-          path: .
-
-      - name: Upload python main artifact (ubuntu-3.8)
+      - name: Upload python main artifact
         if: matrix.OsType == 'ubuntu-latest' && matrix.PythonVersion == '3.8'
         uses: actions/upload-artifact@v4
         with:
           name: python-artifacts
           path: .
 
-      - name: Upload helm artifacts for all matrix jobs
-        if: github.ref_name == 'main'
-        uses: actions/upload-artifact@v4
-        with:
-          name: helm-artifacts-${{ matrix.OsType }}-${{ matrix.PythonVersion }}
-          path: ${{ github.workspace }}/helm-charts
-
-      - name: Upload helm main artifact (ubuntu-3.8)
+      - name: Upload helm main artifact
         if: matrix.OsType == 'ubuntu-latest' && matrix.PythonVersion == '3.8'
         uses: actions/upload-artifact@v4
         with:
           name: helm-artifacts
           path: ${{ github.workspace }}/helm-charts
 
-      - name: Upload kind cluster artifact for all matrix jobs
-        if: github.ref_name == 'main'
-        uses: actions/upload-artifact@v4
-        with:
-          name: kind-cluster-${{ matrix.OsType }}-${{ matrix.PythonVersion }}
-          path: ${{ github.workspace }}/cluster.yml
-
-      - name: Upload kind cluster main artifact (ubuntu-3.8)
+      - name: Upload kind cluster main artifact
         if: github.ref_name == 'main' && matrix.OsType == 'ubuntu-latest' && matrix.PythonVersion == '3.8'
         uses: actions/upload-artifact@v4
         with:
