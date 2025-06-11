@@ -64,12 +64,6 @@ jobs:
           --set todoapp.secrets.DB_HOST="${{ secrets.APP_DB_HOST }}" \
           --set todoapp.image.tag=${{ github.sha }}
 
-      - name: Create Kubernetes Namespaces
-        run: |
-          kubectl create namespace todoapp || echo "namespace todoapp already exists"
-          kubectl create namespace mysql-staging || echo "namespace mysql-staging already exists"
-
-
       - name: Deploy helm to Development
         run: |
           helm upgrade --install --wait --timeout 180s --debug ${{ inputs.helm-release-name }} ./todoapp-*.tgz \
