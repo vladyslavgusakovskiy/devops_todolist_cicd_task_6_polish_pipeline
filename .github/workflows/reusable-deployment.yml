@@ -64,17 +64,17 @@ jobs:
           --set todoapp.secrets.DB_HOST="${{ secrets.APP_DB_HOST }}" \
           --set todoapp.image.tag=${{ github.sha }}
 
-      - name: Delete existing Helm release (ignore errors)
-        run: |
-          helm uninstall ${{ inputs.helm-release-name }} --namespace todoapp || true
-      - name: Delete namespace (if exists)
-        run: |
-          kubectl delete namespace todoapp --ignore-not-found=true
-      - name: Wait for namespace deletion to complete
-        run: |
-          for i in {1..30}; do
-            kubectl get namespace todoapp && sleep 5 || break
-          done
+      # - name: Delete existing Helm release (ignore errors)
+      #   run: |
+      #     helm uninstall ${{ inputs.helm-release-name }} --namespace todoapp || true
+      # - name: Delete namespace (if exists)
+      #   run: |
+      #     kubectl delete namespace todoapp --ignore-not-found=true
+      # - name: Wait for namespace deletion to complete
+      #   run: |
+      #     for i in {1..30}; do
+      #       kubectl get namespace todoapp && sleep 5 || break
+      #     done
 
       - name: Deploy helm to Development
         run: |
